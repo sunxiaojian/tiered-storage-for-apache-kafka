@@ -26,6 +26,9 @@
     <suppress checks="RegexpHeader" files="IcebergWriter.java"/>
     <suppress checks="RegexpHeader" files="TableWriterFactory.java"/>
     <suppress checks="AbbreviationAsWordInName" files="DataKeyAndAADEqualsTest"/>
+    <suppress checks="AbbreviationAsWordInName" files=".*OSS.*\.java"/>
+    <suppress checks="ImportOrder" files="OSSStorage.java"/>
+    <suppress checks="ImportOrder" files="OSSStorageMetricsTest.java"/>
     <suppress checks="ClassDataAbstractionCoupling" files=".*Test\.java"/>
     <suppress checks="ClassFanOutComplexity" files=".*Test\.java"/>
     <suppress checks="ClassFanOutComplexity" files=".*Bench\.java"/>
@@ -48,6 +51,7 @@
     <suppress checks="ClassDataAbstractionCoupling" files="Metrics.java"/>
     <suppress checks="ClassDataAbstractionCoupling" files="MetricCollector.java"/>
     <suppress checks="ClassDataAbstractionCoupling" files="AzureBlobStorage.java"/>
+    <suppress checks="ClassDataAbstractionCoupling" files="OSSStorage.java"/>
     <suppress checks="ClassDataAbstractionCoupling" files="ParquetAvroValueReaders.java"/>
     <suppress checks="ClassDataAbstractionCoupling" files=".*Bench\.java"/>
     <suppress checks="CyclomaticComplexity" files="MetricCollector.java"/>

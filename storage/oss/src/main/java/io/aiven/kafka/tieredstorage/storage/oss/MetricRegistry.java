@@ -1,0 +1,233 @@
+/*
+ * Copyright 2025 Aiven Oy
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package io.aiven.kafka.tieredstorage.storage.oss;
+
+import java.util.List;
+
+import org.apache.kafka.common.MetricNameTemplate;
+
+public class MetricRegistry {
+    public static final String METRIC_CONTEXT = "aiven.kafka.server.tieredstorage.oss";
+    public static final String METRIC_DOMAIN = "aiven.kafka.server.tieredstorage.oss";
+
+    static final String METRIC_GROUP = "oss-client-metrics";
+    static final String GET_OBJECT_REQUESTS = "get-object-requests";
+    static final String GET_OBJECT_REQUESTS_RATE = GET_OBJECT_REQUESTS + "-rate";
+    static final String GET_OBJECT_REQUESTS_TOTAL = GET_OBJECT_REQUESTS + "-total";
+    static final String GET_OBJECT_REQUESTS_DOC = "get object request operations";
+    static final String GET_OBJECT_TIME = "get-object-time";
+    static final String GET_OBJECT_TIME_AVG = GET_OBJECT_TIME + "-avg";
+    static final String GET_OBJECT_TIME_MAX = GET_OBJECT_TIME + "-max";
+    static final String GET_OBJECT_TIME_DOC = "time spent getting a response from a get object request";
+    static final String PUT_OBJECT_REQUESTS = "put-object-requests";
+    static final String PUT_OBJECT_REQUESTS_RATE = PUT_OBJECT_REQUESTS + "-rate";
+    static final String PUT_OBJECT_REQUESTS_TOTAL = PUT_OBJECT_REQUESTS + "-total";
+    static final String PUT_OBJECT_REQUESTS_DOC = "put object request operations";
+    static final String PUT_OBJECT_TIME = "put-object-time";
+    static final String PUT_OBJECT_TIME_AVG = PUT_OBJECT_TIME + "-avg";
+    static final String PUT_OBJECT_TIME_MAX = PUT_OBJECT_TIME + "-max";
+    static final String PUT_OBJECT_TIME_DOC = "time spent uploading an object";
+    static final String DELETE_OBJECT_REQUESTS = "delete-object-requests";
+    static final String DELETE_OBJECT_REQUESTS_RATE = DELETE_OBJECT_REQUESTS + "-rate";
+    static final String DELETE_OBJECT_REQUESTS_TOTAL = DELETE_OBJECT_REQUESTS + "-total";
+    static final String DELETE_OBJECT_REQUESTS_DOC = "delete object request operations";
+    static final String DELETE_OBJECT_TIME = "delete-object-time";
+    static final String DELETE_OBJECT_TIME_AVG = DELETE_OBJECT_TIME + "-avg";
+    static final String DELETE_OBJECT_TIME_MAX = DELETE_OBJECT_TIME + "-max";
+    static final String DELETE_OBJECT_TIME_DOC = "time spent deleting an object";
+    static final String DELETE_OBJECTS_REQUESTS = "delete-objects-requests";
+    static final String DELETE_OBJECTS_REQUESTS_RATE = DELETE_OBJECTS_REQUESTS + "-rate";
+    static final String DELETE_OBJECTS_REQUESTS_TOTAL = DELETE_OBJECTS_REQUESTS + "-total";
+    static final String DELETE_OBJECTS_REQUESTS_DOC = "delete a set of objects request operations";
+    static final String DELETE_OBJECTS_TIME = "delete-objects-time";
+    static final String DELETE_OBJECTS_TIME_AVG = DELETE_OBJECTS_TIME + "-avg";
+    static final String DELETE_OBJECTS_TIME_MAX = DELETE_OBJECTS_TIME + "-max";
+    static final String DELETE_OBJECTS_TIME_DOC = "time spent deleting a set of objects";
+
+    static final String SERVER_ERRORS = "server-errors";
+    static final String SERVER_ERRORS_RATE = SERVER_ERRORS + "-rate";
+    static final String SERVER_ERRORS_TOTAL = SERVER_ERRORS + "-total";
+    static final String SERVER_ERRORS_DOC = "server errors";
+    static final String CONFIGURED_TIMEOUT_ERRORS = "configured-timeout-errors";
+    static final String CONFIGURED_TIMEOUT_ERRORS_RATE = CONFIGURED_TIMEOUT_ERRORS + "-rate";
+    static final String CONFIGURED_TIMEOUT_ERRORS_TOTAL = CONFIGURED_TIMEOUT_ERRORS + "-total";
+    static final String CONFIGURED_TIMEOUT_ERRORS_DOC = "configured timeout errors";
+    static final String IO_ERRORS = "io-errors";
+    static final String IO_ERRORS_RATE = IO_ERRORS + "-rate";
+    static final String IO_ERRORS_TOTAL = IO_ERRORS + "-total";
+    static final String IO_ERRORS_DOC = "IO errors";
+    static final String OTHER_ERRORS = "other-errors";
+    static final String OTHER_ERRORS_RATE = OTHER_ERRORS + "-rate";
+    static final String OTHER_ERRORS_TOTAL = OTHER_ERRORS + "-total";
+    static final String OTHER_ERRORS_DOC = "other errors";
+
+    private static final String RATE_DOC_PREFIX = "Rate of ";
+    private static final String TOTAL_DOC_PREFIX = "Total number of ";
+    private static final String AVG_DOC_PREFIX = "Average ";
+    private static final String MAX_DOC_PREFIX = "Maximum ";
+
+    static final MetricNameTemplate GET_OBJECT_REQUESTS_RATE_METRIC_NAME = new MetricNameTemplate(
+        GET_OBJECT_REQUESTS_RATE,
+        METRIC_GROUP,
+        RATE_DOC_PREFIX + GET_OBJECT_REQUESTS_DOC
+    );
+    static final MetricNameTemplate GET_OBJECT_REQUESTS_TOTAL_METRIC_NAME = new MetricNameTemplate(
+        GET_OBJECT_REQUESTS_TOTAL,
+        METRIC_GROUP,
+        TOTAL_DOC_PREFIX + GET_OBJECT_REQUESTS_DOC
+    );
+    static final MetricNameTemplate GET_OBJECT_TIME_AVG_METRIC_NAME = new MetricNameTemplate(
+        GET_OBJECT_TIME_AVG,
+        METRIC_GROUP,
+        AVG_DOC_PREFIX + GET_OBJECT_TIME_DOC
+    );
+    static final MetricNameTemplate GET_OBJECT_TIME_MAX_METRIC_NAME = new MetricNameTemplate(
+        GET_OBJECT_TIME_MAX,
+        METRIC_GROUP,
+        MAX_DOC_PREFIX + GET_OBJECT_TIME_DOC
+    );
+    static final MetricNameTemplate PUT_OBJECT_REQUESTS_RATE_METRIC_NAME = new MetricNameTemplate(
+        PUT_OBJECT_REQUESTS_RATE,
+        METRIC_GROUP,
+        RATE_DOC_PREFIX + PUT_OBJECT_REQUESTS_DOC
+    );
+    static final MetricNameTemplate PUT_OBJECT_REQUESTS_TOTAL_METRIC_NAME = new MetricNameTemplate(
+        PUT_OBJECT_REQUESTS_TOTAL,
+        METRIC_GROUP,
+        TOTAL_DOC_PREFIX + PUT_OBJECT_REQUESTS_DOC
+    );
+    static final MetricNameTemplate PUT_OBJECT_TIME_AVG_METRIC_NAME = new MetricNameTemplate(
+        PUT_OBJECT_TIME_AVG,
+        METRIC_GROUP,
+        AVG_DOC_PREFIX + PUT_OBJECT_TIME_DOC
+    );
+    static final MetricNameTemplate PUT_OBJECT_TIME_MAX_METRIC_NAME = new MetricNameTemplate(
+        PUT_OBJECT_TIME_MAX,
+        METRIC_GROUP,
+        MAX_DOC_PREFIX + PUT_OBJECT_TIME_DOC
+    );
+    static final MetricNameTemplate DELETE_OBJECT_REQUESTS_RATE_METRIC_NAME = new MetricNameTemplate(
+        DELETE_OBJECT_REQUESTS_RATE,
+        METRIC_GROUP,
+        RATE_DOC_PREFIX + DELETE_OBJECT_REQUESTS_DOC
+    );
+    static final MetricNameTemplate DELETE_OBJECT_REQUESTS_TOTAL_METRIC_NAME = new MetricNameTemplate(
+        DELETE_OBJECT_REQUESTS_TOTAL,
+        METRIC_GROUP,
+        TOTAL_DOC_PREFIX + DELETE_OBJECT_REQUESTS_DOC
+    );
+    static final MetricNameTemplate DELETE_OBJECT_TIME_AVG_METRIC_NAME = new MetricNameTemplate(
+        DELETE_OBJECT_TIME_AVG,
+        METRIC_GROUP,
+        AVG_DOC_PREFIX + DELETE_OBJECT_TIME_DOC
+    );
+    static final MetricNameTemplate DELETE_OBJECT_TIME_MAX_METRIC_NAME = new MetricNameTemplate(
+        DELETE_OBJECT_TIME_MAX,
+        METRIC_GROUP,
+        MAX_DOC_PREFIX + DELETE_OBJECT_TIME_DOC
+    );
+    static final MetricNameTemplate DELETE_OBJECTS_REQUESTS_RATE_METRIC_NAME = new MetricNameTemplate(
+        DELETE_OBJECTS_REQUESTS_RATE,
+        METRIC_GROUP,
+        RATE_DOC_PREFIX + DELETE_OBJECTS_REQUESTS_DOC
+    );
+    static final MetricNameTemplate DELETE_OBJECTS_REQUESTS_TOTAL_METRIC_NAME = new MetricNameTemplate(
+        DELETE_OBJECTS_REQUESTS_TOTAL,
+        METRIC_GROUP,
+        TOTAL_DOC_PREFIX + DELETE_OBJECTS_REQUESTS_DOC
+    );
+    static final MetricNameTemplate DELETE_OBJECTS_TIME_AVG_METRIC_NAME = new MetricNameTemplate(
+        DELETE_OBJECTS_TIME_AVG,
+        METRIC_GROUP,
+        AVG_DOC_PREFIX + DELETE_OBJECTS_TIME_DOC
+    );
+    static final MetricNameTemplate DELETE_OBJECTS_TIME_MAX_METRIC_NAME = new MetricNameTemplate(
+        DELETE_OBJECTS_TIME_MAX,
+        METRIC_GROUP,
+        MAX_DOC_PREFIX + DELETE_OBJECTS_TIME_DOC
+    );
+
+    static final MetricNameTemplate SERVER_ERRORS_RATE_METRIC_NAME = new MetricNameTemplate(
+        SERVER_ERRORS_RATE,
+        METRIC_GROUP,
+        RATE_DOC_PREFIX + SERVER_ERRORS_DOC
+    );
+    static final MetricNameTemplate SERVER_ERRORS_TOTAL_METRIC_NAME = new MetricNameTemplate(
+        SERVER_ERRORS_TOTAL,
+        METRIC_GROUP,
+        TOTAL_DOC_PREFIX + SERVER_ERRORS_DOC
+    );
+    static final MetricNameTemplate CONFIGURED_TIMEOUT_ERRORS_RATE_METRIC_NAME = new MetricNameTemplate(
+        CONFIGURED_TIMEOUT_ERRORS_RATE,
+        METRIC_GROUP,
+        RATE_DOC_PREFIX + CONFIGURED_TIMEOUT_ERRORS_DOC
+    );
+    static final MetricNameTemplate CONFIGURED_TIMEOUT_ERRORS_TOTAL_METRIC_NAME = new MetricNameTemplate(
+        CONFIGURED_TIMEOUT_ERRORS_TOTAL,
+        METRIC_GROUP,
+        TOTAL_DOC_PREFIX + CONFIGURED_TIMEOUT_ERRORS_DOC
+    );
+    static final MetricNameTemplate IO_ERRORS_RATE_METRIC_NAME = new MetricNameTemplate(
+        IO_ERRORS_RATE,
+        METRIC_GROUP,
+        RATE_DOC_PREFIX + IO_ERRORS_DOC
+    );
+    static final MetricNameTemplate IO_ERRORS_TOTAL_METRIC_NAME = new MetricNameTemplate(
+        IO_ERRORS_TOTAL,
+        METRIC_GROUP,
+        TOTAL_DOC_PREFIX + IO_ERRORS_DOC
+    );
+    static final MetricNameTemplate OTHER_ERRORS_RATE_METRIC_NAME = new MetricNameTemplate(
+        OTHER_ERRORS_RATE,
+        METRIC_GROUP,
+        RATE_DOC_PREFIX + OTHER_ERRORS_DOC
+    );
+    static final MetricNameTemplate OTHER_ERRORS_TOTAL_METRIC_NAME = new MetricNameTemplate(
+        OTHER_ERRORS_TOTAL,
+        METRIC_GROUP,
+        TOTAL_DOC_PREFIX + OTHER_ERRORS_DOC
+    );
+
+    public List<MetricNameTemplate> all() {
+        return List.of(
+            GET_OBJECT_REQUESTS_RATE_METRIC_NAME,
+            GET_OBJECT_REQUESTS_TOTAL_METRIC_NAME,
+            GET_OBJECT_TIME_AVG_METRIC_NAME,
+            GET_OBJECT_TIME_MAX_METRIC_NAME,
+            PUT_OBJECT_REQUESTS_RATE_METRIC_NAME,
+            PUT_OBJECT_REQUESTS_TOTAL_METRIC_NAME,
+            PUT_OBJECT_TIME_AVG_METRIC_NAME,
+            PUT_OBJECT_TIME_MAX_METRIC_NAME,
+            DELETE_OBJECT_REQUESTS_RATE_METRIC_NAME,
+            DELETE_OBJECT_REQUESTS_TOTAL_METRIC_NAME,
+            DELETE_OBJECT_TIME_AVG_METRIC_NAME,
+            DELETE_OBJECT_TIME_MAX_METRIC_NAME,
+            DELETE_OBJECTS_REQUESTS_RATE_METRIC_NAME,
+            DELETE_OBJECTS_REQUESTS_TOTAL_METRIC_NAME,
+            DELETE_OBJECTS_TIME_AVG_METRIC_NAME,
+            DELETE_OBJECTS_TIME_MAX_METRIC_NAME,
+            SERVER_ERRORS_RATE_METRIC_NAME,
+            SERVER_ERRORS_TOTAL_METRIC_NAME,
+            CONFIGURED_TIMEOUT_ERRORS_RATE_METRIC_NAME,
+            CONFIGURED_TIMEOUT_ERRORS_TOTAL_METRIC_NAME,
+            IO_ERRORS_RATE_METRIC_NAME,
+            IO_ERRORS_TOTAL_METRIC_NAME,
+            OTHER_ERRORS_RATE_METRIC_NAME,
+            OTHER_ERRORS_TOTAL_METRIC_NAME
+        );
+    }
+}

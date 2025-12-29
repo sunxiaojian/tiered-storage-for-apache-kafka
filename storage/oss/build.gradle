@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Aiven Oy
+ * Copyright 2023 Aiven Oy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,22 @@
  * limitations under the License.
  */
 
-rootProject.name = 'tiered-storage-for-apache-kafka'
-include 'core'
-include 'storage'
-include 'storage:core'
-include 'storage:filesystem'
-include 'storage:azure'
-include 'storage:gcs'
-include 'storage:s3'
-include 'storage:oss'
-include 'e2e'
-include 'commons'
-include 'docs'
-include 'benchmarks'
+archivesBaseName = "storage-oss"
+
+ext {
+    wireMockVersion = "3.13.1"
+}
+
+dependencies {
+    implementation project(":storage:core")
+    implementation project(':commons')
+
+    // Alibaba Cloud OSS SDK
+    implementation "com.aliyun.oss:aliyun-sdk-oss:$aliyunOssSdkVersion"
+
+    testImplementation(testFixtures(project(":storage:core")))
+
+    integrationTestImplementation("org.wiremock:wiremock:$wireMockVersion") {
+        exclude group: "org.slf4j"
+    }
+}

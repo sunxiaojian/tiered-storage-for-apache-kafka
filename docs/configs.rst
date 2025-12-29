@@ -572,6 +572,108 @@ S3StorageConfig
 
 
 -----------------
+OSSStorageConfig
+-----------------
+``oss.bucket.name``
+  OSS bucket to store log segments
+
+  * Type: string
+  * Valid Values: non-empty string
+  * Importance: high
+
+``oss.endpoint``
+  OSS endpoint URL
+
+  * Type: string
+  * Valid Values: Valid URL as defined in rfc2396
+  * Importance: high
+
+``oss.region``
+  OSS region where bucket is placed
+
+  * Type: string
+  * Importance: medium
+
+``oss.access.key.id``
+  OSS access key ID
+
+  * Type: password
+  * Default: null
+  * Valid Values: Non-empty password text
+  * Importance: medium
+
+``oss.access.key.secret``
+  OSS access key secret
+
+  * Type: password
+  * Default: null
+  * Valid Values: Non-empty password text
+  * Importance: medium
+
+``oss.checksum.check.enabled``
+  This property is used to enable checksum validation done by OSS library. When set to "false", there will be no validation. It is disabled by default as Kafka already validates integrity of the files.
+
+  * Type: boolean
+  * Default: false
+  * Importance: medium
+
+``oss.credentials.file``
+  This property is used to define a file where credentials are defined. The file might be updated during process life cycle, and the credentials will be reloaded from the file.
+
+  * Type: string
+  * Default: null
+  * Importance: medium
+
+``oss.multipart.upload.part.size``
+  Size of parts in bytes to use when uploading. All parts but the last one will have this size. The smaller the part size, the more calls to OSS are needed to upload a file; increasing costs. The higher the part size, the more memory is needed to buffer the part. Valid values: between 100KiB and 1.8GiB
+
+  * Type: int
+  * Default: 8388608
+  * Valid Values: [102400,...,1900000000]
+  * Importance: medium
+
+``oss.security.token``
+  OSS security token for temporary credentials
+
+  * Type: password
+  * Default: null
+  * Valid Values: Non-empty password text
+  * Importance: medium
+
+``oss.certificate.check.enabled``
+  This property is used to enable SSL certificate checking for OSS services. When set to "false", the SSL certificate checking for OSS services will be bypassed. Use with caution and always only in a test environment, as disabling certificate lead the storage to be vulnerable to man-in-the-middle attacks.
+
+  * Type: boolean
+  * Default: true
+  * Importance: low
+
+``oss.connection.timeout``
+  OSS connection timeout in milliseconds
+
+  * Type: long
+  * Default: 50000
+  * Valid Values: null or [1,...,9223372036854775807]
+  * Importance: low
+
+``oss.socket.timeout``
+  OSS socket timeout in milliseconds
+
+  * Type: long
+  * Default: 50000
+  * Valid Values: null or [1,...,9223372036854775807]
+  * Importance: low
+
+``oss.storage.class``
+  Defines which storage class to use when uploading objects
+
+  * Type: string
+  * Default: Standard
+  * Valid Values: [Standard, IA, Archive, ColdArchive]
+  * Importance: low
+
+
+
+-----------------
 FilesystemStorageConfig
 -----------------
 .. Only for development/testing purposes
